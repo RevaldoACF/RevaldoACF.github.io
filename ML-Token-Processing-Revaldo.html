@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Token Processing - Revaldo</title>
+    <script src="https://cdn.jsdelivr.net/npm/remotion@4.0.0/dist/remotion.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { 
+            Composition, 
+            AbsoluteFill, 
+            useCurrentFrame, 
+            useVideoConfig,
+            interpolate,
+            spring,
+            Easing
+        } = window.Remotion;
+
+        const MLProcessing = () => {
+            const frame = useCurrentFrame();
+            const { fps, durationInFrames } = useVideoConfig();
+            
+            const loopDuration = durationInFrames;
+            const loopFrame = frame % loopDuration;
+            
+            const tokens = ['re', 'val', 'do'];
+            const tokenDuration = loopDuration / 3;
+            
+            const currentTokenIndex = Math.floor(loopFrame / tokenDuration);
+            const tokenProgress = (loopFrame % tokenDuration) / tokenDuration;
+            
+            const fadeIn = interpolate(tokenProgress, [0, 0.15], [0, 1], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+                easing: Easing.bezier(0.16, 1, 0.3, 1)
+            });
+            
+            const fadeOut = interpolate(tokenProgress, [0.85, 1], [1, 0], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+                easing: Easing.bezier(0.7, 0, 0.84, 0)
+            });
+            
+            const opacity = Math.min(fadeIn, fadeOut);
+            
+            const scale = interpolate(tokenProgress, [0, 0.2, 0.8, 1], [0.85, 1, 1, 0.85], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+                easing: Easing.bezier(0.34, 1.56, 0.64, 1)
+            });
+            
+            const y = interpolate(tokenProgress, [0, 0.2, 0.8, 1], [30, 0, 0, -30], {
+                extrapolateLeft: 'clamp',
+                extrapolateRight: 'clamp',
+                easing: Easing.bezier(0.16, 1, 0.3, 1)
+            });
+            
+            const particleCount = 24;
+            const particles = Array.from({ length: particleCount });
+            
+            const neuralNodes = Array.from({ length: 8 });
+            const nodeRadius = 180;
+            
+            const pulseScale = 1 + Math.sin(loopFrame * 0.08) * 0.05;
+            
+            const orbitRotation = (loopFrame * 0.8) % 360;
+            
+            const waveOffset = Math.sin(loopFrame * 0.12) * 20;
+            
+            return (
+                <AbsoluteFill style={{ 
+                    background: 'linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #1a1a1a 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'hidden'
+                }}>
+                    
+                    {/* Neural network background */}
+                    <div style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        {neuralNodes.map((_, i) => {
+                            const angle = (i / neuralNodes.length) * Math.PI * 2 + (orbitRotation * Math.PI / 180);
+                            const x = Math.cos(angle) * nodeRadius;
+                            const y = Math.sin(angle) * nodeRadius;
+                            const nodeOpacity = interpolate(
+                                Math.sin(loopFrame * 0.1 + i * 0.5),
+                                [-1, 1],
+                                [0.15, 0.4]
+                            );
+                            
+                            return (
+                                <div key={i} style={{
+                                    position: 'absolute',
+                                    left: '50%',
+                                    top: '50%',
+                                    width: '12px',
+                                    height: '12px',
+                                    borderRadius: '50%',
+                                    background: `rgba(59, 130, 246, ${nodeOpacity})`,
+                                    transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(${pulseScale})`,
+                                    boxShadow: `0 0 20px rgba(59, 130, 246, ${nodeOpacity * 0.6})`,
+                                    transition: 'all 0.3s ease'
+                                }} />
+                            );
+                        })}
+                        
+                        {/* Connection lines */}
+                        <svg style={{
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            pointerEvents: 'none'
+                        }}>
+                            {neuralNodes.map((_, i) => {
+                                const nextIndex = (i + 1) % neuralNodes.length;
+                                const angle1 = (i / neuralNodes.length) * Math.PI * 2 + (orbitRotation * Math.PI / 180);
+                                const angle2 = (nextIndex / neuralNodes.length) * Math.PI * 2 + (orbitRotation * Math.PI / 180);
+                                const x1 = Math.cos(angle1) * nodeRadius;
+                                const y1 = Math.sin(angle1) * nodeRadius;
+                                const x2 = Math.cos(angle2) * nodeRadius;
+                                const y2 = Math.sin(angle2) * nodeRadius;
+                                
+                                const lineOpacity = interpolate(
+                                    Math.sin(loopFrame * 0.08 + i * 0.3),
+                                    [-1, 1],
+                                    [0.1, 0.25]
+                                );
+                                
+                                return (
+                                    <line
+                                        key={i}
+                                        x1={`calc(50% + ${x1}px)`}
+                                        y1={`calc(50% + ${y1}px)`}
+                                        x2={`calc(50% + ${x2}px)`}
+                                        y2={`calc(50% + ${y2}px)`}
+                                        stroke={`rgba(59, 130, 246, ${lineOpacity})`}
+                                        strokeWidth="1.5"
+                                    />
+                                );
+                            })}
+                        </svg>
+                    </div>
+                    
+                    {/* Particles */}
+                    {particles.map((_, i) => {
+                        const particleAngle = (i / particleCount) * Math.PI * 2;
+                        const particleRadius = 300 + Math.sin(loopFrame * 0.05 + i) * 50;
+                        const particleX = Math.cos(particleAngle + loopFrame * 0.02) * particleRadius;
+                        const particleY = Math.sin(particleAngle + loopFrame * 0.02) * particleRadius;
+                        const particleOpacity = interpolate(
+                            Math.sin(loopFrame * 0.1 + i * 0.8),
+                            [-1, 1],
+                            [0.1, 0.4]
+                        );
+                        
+                        return (
+                            <div key={i} style={{
+                                position: 'absolute',
+                                left: '50%',
+                                top: '50%',
+                                width: '4px',
+                                height: '4px',
+                                borderRadius: '50%',
+                                background: `rgba(96, 165, 250, ${particleOpacity})`,
+                                transform: `translate(calc(-50% + ${particleX}px), calc(-50% + ${particleY}px))`,
+                                boxShadow: `0 0 10px rgba(96, 165, 250, ${particleOpacity})`
+                            }} />
+                        );
+                    })}
+                    
+                    {/* Main token display */}
+                    <div style={{
+                        position: 'relative',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '40px',
+                        zIndex: 10
+                    }}>
+                        
+                        {/* Processing indicator */}
+                        <div style={{
+                            display: 'flex',
+                            gap: '12px',
+                            opacity: opacity * 0.6
+                        }}>
+                            {[0, 1, 2].map(i => {
+                                const dotDelay = i * 0.15;
+                                const dotScale = interpolate(
+                                    (tokenProgress + dotDelay) % 1,
+                                    [0, 0.5, 1],
+                                    [1, 1.4, 1],
+                                    { extrapolateRight: 'clamp' }
+                                );
+                                
+                                return (
+                                    <div key={i} style={{
+                                        width: '8px',
+                                        height: '8px',
+                                        borderRadius: '50%',
+                                        background: '#3b82f6',
+                                        transform: `scale(${dotScale})`,
+                                        boxShadow: '0 0 12px rgba(59, 130, 246, 0.6)'
+                                    }} />
+                                );
+                            })}
+                        </div>
+                        
+                        {/* Token container */}
+                        <div style={{
+                            padding: '60px 100px',
+                            background: 'rgba(30, 30, 30, 0.7)',
+                            backdropFilter: 'blur(20px)',
+                            borderRadius: '32px',
+                            border: '1px solid rgba(59, 130, 246, 0.2)',
+                            boxShadow: `0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(59, 130, 246, ${opacity * 0.15})`,
+                            transform: `scale(${scale}) translateY(${y}px)`,
+                            opacity: opacity
+                        }}>
+                            <div style={{
+                                fontSize: '120px',
+                                fontWeight: '700',
+                                color: '#ffffff',
+                                letterSpacing: '-0.02em',
+                                textAlign: 'center',
+                                textShadow: '0 0 40px rgba(59, 130, 246, 0.4)'
+                            }}>
+                                {tokens[currentTokenIndex]}
+                            </div>
+                        </div>
+                        
+                        {/* Progress bar */}
+                        <div style={{
+                            width: '300px',
+                            height: '4px',
+                            background: 'rgba(59, 130, 246, 0.2)',
+                            borderRadius: '999px',
+                            overflow: 'hidden',
+                            opacity: opacity * 0.8
+                        }}>
+                            <div style={{
+                                height: '100%',
+                                width: `${tokenProgress * 100}%`,
+                                background: 'linear-gradient(90deg, #3b82f6, #60a5fa)',
+                                borderRadius: '999px',
+                                boxShadow: '0 0 20px rgba(59, 130, 246, 0.6)',
+                                transition: 'width 0.1s linear'
+                            }} />
+                        </div>
+                        
+                        {/* Token counter */}
+                        <div style={{
+                            fontSize: '24px',
+                            fontWeight: '500',
+                            color: 'rgba(255, 255, 255, 0.5)',
+                            opacity: opacity * 0.7,
+                            letterSpacing: '0.05em'
+                        }}>
+                            {currentTokenIndex + 1} / {tokens.length}
+                        </div>
+                    </div>
+                    
+                    {/* Ambient glow */}
+                    <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        width: '600px',
+                        height: '600px',
+                        background: `radial-gradient(circle, rgba(59, 130, 246, ${opacity * 0.15}) 0%, transparent 70%)`,
+                        transform: 'translate(-50%, -50%)',
+                        pointerEvents: 'none',
+                        filter: 'blur(60px)'
+                    }} />
+                </AbsoluteFill>
+            );
+        };
+
+        const Root = () => {
+            return (
+                <>
+                    <Composition
+                        id="MLProcessing"
+                        component={MLProcessing}
+                        durationInFrames={750}
+                        fps={30}
+                        width={1920}
+                        height={1080}
+                    />
+                </>
+            );
+        };
+
+        window.remotion_root = Root;
+    </script>
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</body>
+</html>

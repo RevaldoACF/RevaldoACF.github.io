@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#cf1830"/>
+  <g fill="#ffffff" fill-rule="evenodd">
+    <!-- Letter R -->
+    <path d="M 12 15 H 25 C 31 15 35 19 35 25 C 35 29.5 32 33 27 34.5 L 35 49 H 28 L 21 35 H 18.5 V 49 H 12 Z M 18.5 21 V 29 H 24 C 26.5 29 28.5 27.5 28.5 25 C 28.5 22.5 26.5 21 24 21 Z"/>
+    <!-- Letter A with diagonal cut -->
+    <path d="M 37 49 L 48 15 H 53 L 53.5 49 H 47.5 L 47 24 L 39 49 Z"/>
+  </g>
+</svg>

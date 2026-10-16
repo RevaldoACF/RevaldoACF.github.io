@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 576" width="100%" height="100%">
+  <!-- Background Putih Bersih (Hapus baris rect ini jika ingin transparan) -->
+  <rect width="1024" height="576" fill="#ffffff" />
+
+  <!-- Tipografi Utama REVALDO ANDERSON - Warna Merah Clean Solid -->
+  <g fill="#d10202" fill-rule="evenodd">
+
+    <!-- 1. Huruf R (REVALDO) -->
+    <path d="M 40 234 H 79 C 94 234 103 244 103 258.5 C 103 270 96 279 84 282 L 106 333 H 87 L 63 282 H 58 V 333 H 40 V 266 H 78 C 82.5 266 85 263 85 258.5 C 85 254 82.5 251 78 251 H 40 Z" />
+
+    <!-- 2. Huruf E (REVALDO - 4 Garis Horizontal) -->
+    <path d="M 107 234 H 176 V 250 H 107 Z
+             M 107 263 H 176 V 279 H 107 Z
+             M 107 289 H 176 V 305 H 107 Z
+             M 107 317 H 176 V 333 H 107 Z" />
+
+    <!-- 3. Huruf V -->
+    <path d="M 177 234 H 195 L 207 298 L 220 234 H 237 L 217 333 H 196 Z" />
+
+    <!-- 4. Huruf A (REVALDO) -->
+    <path d="M 222 333 L 242 234 H 261 L 282 333 H 263 L 251 270 L 239 333 Z" />
+
+    <!-- 5. Huruf L -->
+    <path d="M 283 234 H 301 V 317 H 320 V 333 H 283 Z" />
+
+    <!-- 6. Huruf D (REVALDO) -->
+    <path d="M 324 234 H 343 C 361 234 371 248 371 272 V 295 C 371 319 361 333 343 333 H 324 Z
+             M 342 250 V 317 H 344 C 350 317 353 311 353 295 V 272 C 353 256 350 250 344 250 Z" />
+
+    <!-- 7. Huruf O (REVALDO) -->
+    <path d="M 423 233 A 51 50.5 0 1 0 423 334 A 51 50.5 0 1 0 423 233 Z
+             M 423 250 A 34 33.5 0 1 1 423 317 A 34 33.5 0 1 1 423 250 Z" />
+
+    <!-- 8. Huruf A (ANDERSON) -->
+    <path d="M 454 333 L 544 234 H 558 V 333 H 538 V 259 L 468 333 Z" />
+
+    <!-- 9. Huruf N (ANDERSON - Pertama) -->
+    <path d="M 563 234 H 581 L 596 287 V 234 H 612 V 333 H 595 L 579 279 V 333 H 563 Z" />
+
+    <!-- 10. Huruf D (ANDERSON) -->
+    <path d="M 615 234 H 633 C 650 234 661 248 661 272 V 295 C 661 319 650 333 633 333 H 615 Z
+             M 633 250 V 317 H 635 C 640 317 643 311 643 295 V 272 C 643 256 640 250 635 250 Z" />
+
+    <!-- 11. Huruf E (ANDERSON - 4 Garis Horizontal) -->
+    <path d="M 663 234 H 732 V 250 H 663 Z
+             M 663 263 H 732 V 279 H 663 Z
+             M 663 289 H 732 V 305 H 663 Z
+             M 663 317 H 732 V 333 H 663 Z" />
+
+    <!-- 12. Huruf R (ANDERSON) -->
+    <path d="M 735 234 H 759 C 773 234 780 244 780 266 C 780 281 776 291 770 296 L 780 333 H 763 L 755 302 H 752 V 333 H 735 Z
+             M 752 250 V 287 H 755 C 760 287 762 282 762 268.5 C 762 255 760 250 755 250 Z" />
+
+    <!-- 13. Huruf S -->
+    <path d="M 803 233 C 817 233 825 242 825 256 V 262 H 808 V 256 C 808 251 806 249 803 249 C 800 249 798 251 798 256 C 798 261 800 265 805 271 L 818 287 C 823 293 825 300 825 310 C 825 325 816 334 802 334 C 788 334 780 325 780 310 V 304 H 796 V 310 C 796 315 798 318 802 318 C 806 318 808 315 808 310 C 808 305 806 301 801 295 L 787 278 C 782 272 780 265 780 256 C 780 242 789 233 803 233 Z" />
+
+    <!-- 14. Huruf O (ANDERSON) + Simbol Plus (+) di Tengah -->
+    <path d="M 874 233 A 49 50.5 0 1 0 874 334 A 49 50.5 0 1 0 874 233 Z
+             M 874 248 A 33 35.5 0 1 1 874 319 A 33 35.5 0 1 1 874 248 Z
+             M 873 268 H 876 V 283 H 890 V 286 H 876 V 300 H 873 V 286 H 859 V 283 H 873 Z" />
+
+    <!-- 15. Huruf N (ANDERSON - Terakhir) -->
+    <path d="M 923 234 H 944 L 968 279 V 234 H 985 V 351 L 977 341 V 333 H 968 L 944 283 V 333 H 923 Z" />
+
+  </g>
+</svg>
